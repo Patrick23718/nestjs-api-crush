@@ -8,6 +8,7 @@ import { TokenVerifyGuard } from "../shared/token-verify/token-verify.guard";
 @Controller('posts')
 @UseGuards(TokenVerifyGuard)
 export class PostsController {
+
   constructor(private readonly postsService: PostsService) {}
 
   @Post()
