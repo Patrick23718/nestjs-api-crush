@@ -16,7 +16,7 @@ export class AuthService {
     return user.save();
   }
 
-  async findOne(id: string): Promise<UserDocument[]> {
+  async findOne(id: string): Promise<UserDocument> {
     return this.authModel.findOne({uid: id}).populate('Interests')
   }
 

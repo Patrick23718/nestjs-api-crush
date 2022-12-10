@@ -12,8 +12,8 @@ export class InterestsService {
   }
 
   async create(createInterestDto: CreateInterestDto): Promise<InterestDocument> {
-    const employee = new this.interestModel(createInterestDto);
-    return employee.save();
+    const interest = new this.interestModel(createInterestDto);
+    return interest.save();
   }
 
   async getAll(): Promise<InterestDocument[]>{
