@@ -5,12 +5,17 @@ import { UpdateInterestDto } from './dto/update-interest.dto';
 import { TokenVerifyGuard } from "../shared/token-verify/token-verify.guard";
 
 @Controller('interests')
-@UseGuards(TokenVerifyGuard)
+// @UseGuards(TokenVerifyGuard)
 export class InterestsController {
   constructor(private readonly interestsService: InterestsService) {}
 
   @Post()
   create(@Body() createInterestDto: CreateInterestDto) {
     return this.interestsService.create(createInterestDto);
+  }
+
+  @Get()
+  getAll() {
+    return this.interestsService.getAll();
   }
 }

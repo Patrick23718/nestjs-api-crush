@@ -16,4 +16,8 @@ export class InterestsService {
     return employee.save();
   }
 
+  async getAll(): Promise<InterestDocument[]>{
+    return this.interestModel.find();
+  }
+
 }

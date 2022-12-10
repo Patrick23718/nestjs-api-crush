@@ -9,13 +9,10 @@ import { InterestsModule } from "./interests/interests.module";
 import { HttpErrorFilter } from "./shared/http-error.filter";
 import { LoggingInterceptor } from "./shared/logging.interceptor";
 import { TokenVerifyMiddleware } from "./shared/token-verify/token-verify.middleware";
-import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
+// import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 
 @Module({
-  imports: [ConfigModule.forRoot(), ThrottlerModule.forRoot({
-    ttl: 60,
-    limit: 10,
-  }), MongooseModule.forRoot(process.env.MONGO_DB_URL,{dbName: process.env.DB_NAME}), AuthModule, InterestsModule],
+  imports: [ConfigModule.forRoot(), MongooseModule.forRoot(process.env.MONGO_DB_URL,{dbName: process.env.DB_NAME}), AuthModule, InterestsModule],
   controllers: [AppController],
   providers: [{
     provide: APP_FILTER,
@@ -24,16 +21,13 @@ import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor
-    },{
-      provide: APP_GUARD,
-      useClass: ThrottlerGuard
     }, AppService],
 })
-export class AppModule implements NestModule{
-  configure(consumer: MiddlewareConsumer): any {
-    consumer.apply(TokenVerifyMiddleware).forRoutes({
-      path: '*', method: RequestMethod.ALL
-    })
-  }
+export class AppModule{
+  // configure(consumer: MiddlewareConsumer): any {
+  //   consumer.apply(TokenVerifyMiddleware).forRoutes({
+  //     path: '*', method: RequestMethod.ALL
+  //   })
+  // }
 
 }

@@ -3,9 +3,10 @@ import {
   Schema,
   SchemaFactory
 } from '@nestjs/mongoose';
-import {
+import mongoose, {
   Document
-} from 'mongoose';
+} from "mongoose";
+import { Interest } from "../../interests/schemas/interest.schema";
 
 export type UserDocument = User & Document;
 
@@ -14,17 +15,20 @@ export class User {
   @Prop({unique: true})
   uid: string;
 
-  //@Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Owner' }] })
-  //owner: Owner[];
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: Interest.name }] })
+  Interests: Interest[];
 
   @Prop()
-  FirstName: string;
+  Images: string[];
 
   @Prop()
-  SurName: string;
+  Name: string;
+
+  @Prop({ type: Date })
+  Birthdate: Date;
 
   @Prop()
-  Designation: string;
+  About: string;
 
   @Prop()
   Email: string;
@@ -33,10 +37,19 @@ export class User {
   Address: string;
 
   @Prop()
-  Salary: string;
+  PhoneNumber: string;
 
   @Prop()
   Gender: string;
+
+  @Prop()
+  ProfileURL: string;
+
+  @Prop({
+    enum: ['AWAIT', 'PUBLISH'],
+    default: 'AWAIT'
+  })
+  Publish: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

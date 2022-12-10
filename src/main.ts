@@ -5,14 +5,12 @@ import { ValidationPipe } from "@nestjs/common";
 import * as admin from 'firebase-admin';
 import { ServiceAccount } from "firebase-admin";
 import helmet from "helmet";
-import * as csurf from 'csurf';
 
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.use(helmet());
-  app.use(csurf());
 
   // Set configuration option
   const adminConfig: ServiceAccount = {
