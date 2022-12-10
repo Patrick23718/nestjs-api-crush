@@ -1,24 +1,25 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from "@nestjs/common";
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards } from "@nestjs/common";
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { AuthService } from "../auth/auth.service";
+import { Request } from "express";
+import { TokenVerifyGuard } from "../shared/token-verify/token-verify.guard";
 
 @Controller('posts')
+@UseGuards(TokenVerifyGuard)
 export class PostsController {
-  constructor(private readonly postsService: PostsService, private readonly authService: AuthService) {}
+
+  constructor(private readonly postsService: PostsService) {}
 
   @Post()
-  async create(@Body() createPostDto: CreatePostDto, @Req() request: Request) {
+  create(@Body() createPostDto: CreatePostDto, @Req() request: Request) {
     createPostDto.AuthorUid = request['userId']
-    const user = await this.authService.findOne(request['userId'])
-    // createPostDto.Author =
     return this.postsService.create(createPostDto);
   }
 
-  @Get()
-  findAll() {
-    return this.postsService.findAll();
+  @Get(':interest')
+  findAll(@Param('interest') interest: string) {
+    return this.postsService.findAll(interest);
   }
 
   @Get(':id')

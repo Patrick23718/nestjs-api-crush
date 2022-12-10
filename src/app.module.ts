@@ -8,7 +8,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { InterestsModule } from "./interests/interests.module";
 import { HttpErrorFilter } from "./shared/http-error.filter";
 import { LoggingInterceptor } from "./shared/logging.interceptor";
-import { TokenVerifyMiddleware } from "./shared/token-verify/token-verify.middleware";
+// import { TokenVerifyMiddleware } from "./shared/token-verify/token-verify.middleware";
 // import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { PostsModule } from './posts/posts.module';
 

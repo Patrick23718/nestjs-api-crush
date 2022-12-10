@@ -26,6 +26,9 @@ export class Post {
  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Interest.name })
   Interest: string;
 
+ @Prop({type: [{type:mongoose.Schema.Types.ObjectId, ref: User.name}]})
+ Likes: User[];
+
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post)

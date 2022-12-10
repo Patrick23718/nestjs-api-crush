@@ -4,19 +4,37 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectModel } from "@nestjs/mongoose";
 import { Post, PostDocument } from "./schemas/post.schema";
 import { Model } from "mongoose";
+import { AuthService } from "../auth/auth.service";
 
 @Injectable()
 export class PostsService {
 
-  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {
+  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>, private readonly  authService: AuthService) {
   }
-  async create(createPostDto: CreatePostDto): Promise<PostDocument> {
+
+  /**
+   *
+   * @param createPostDto
+   */
+  async create(createPostDto: CreatePostDto): Promise<PostDocument>{
+    const user = await this.authService.findOne(createPostDto.AuthorUid)
+    createPostDto.Author = user._id;
     const post = new this.postModel(createPostDto);
     return post.save();
   }
 
-  findAll() {
-    return `This action returns all posts`;
+  async findAll(interest: string): Promise<PostDocument[]> {
+    return this.postModel.find({Interest: interest}).populate({
+        path: "Author",
+        select: ["_id", "uid", "Name", "Interests", "Birthdate", "Gender"],
+        populate: {
+          path: "Interests",
+          select: ["NameFr", "NameEn"]
+        }
+      }).populate({
+        path: "Interest",
+        select: ["NameFr", "NameEn"]
+      });
   }
 
   findOne(id: number) {
