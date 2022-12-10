@@ -10,9 +10,10 @@ import { HttpErrorFilter } from "./shared/http-error.filter";
 import { LoggingInterceptor } from "./shared/logging.interceptor";
 import { TokenVerifyMiddleware } from "./shared/token-verify/token-verify.middleware";
 // import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
+import { PostsModule } from './posts/posts.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), MongooseModule.forRoot(process.env.MONGO_DB_URL,{dbName: process.env.DB_NAME}), AuthModule, InterestsModule],
+  imports: [ConfigModule.forRoot(), MongooseModule.forRoot(process.env.MONGO_DB_URL,{dbName: process.env.DB_NAME}), AuthModule, InterestsModule, PostsModule],
   controllers: [AppController],
   providers: [{
     provide: APP_FILTER,
