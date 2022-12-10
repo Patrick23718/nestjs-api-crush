@@ -4,15 +4,18 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectModel } from "@nestjs/mongoose";
 import { Post, PostDocument } from "./schemas/post.schema";
 import { Model } from "mongoose";
+import { AuthService } from "../auth/auth.service";
 
 @Injectable()
 export class PostsService {
 
-  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {
+  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>, private readonly  authService: AuthService) {
   }
-  async create(createPostDto: CreatePostDto): Promise<PostDocument> {
-    const post = new this.postModel(createPostDto);
-    return post.save();
+  async create(createPostDto: CreatePostDto){
+    const user = await this.authService.findOne(createPostDto.AuthorUid)
+    console.log(user)
+    // const post = new this.postModel(createPostDto);
+    // return post.save();
   }
 
   findAll() {
