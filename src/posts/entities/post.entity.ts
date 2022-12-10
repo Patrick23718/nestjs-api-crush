@@ -1,4 +1,5 @@
-import { IsMongoId, IsNotEmpty, IsString, IsUUID } from "class-validator";
+import { IsArray, IsMongoId, IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
+import { User } from "../../auth/schemas/user.schema";
 
 export class Post {
   @IsString()
@@ -13,15 +14,20 @@ export class Post {
   @IsNotEmpty()
   Image: string;
 
+  @IsOptional()
   @IsMongoId()
-  @IsNotEmpty()
   Author: string;
 
-  @IsUUID("all")
-  @IsNotEmpty()
+  @IsOptional()
+  @IsUUID()
   AuthorUid: string;
 
   @IsMongoId()
   @IsNotEmpty()
   Interest: string;
+
+  @IsArray()
+  @IsOptional()
+  @IsMongoId()
+  Likes: User[]
 }
