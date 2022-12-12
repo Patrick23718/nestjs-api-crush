@@ -1,3 +1,4 @@
+import { AuthModule } from './../auth/auth.module';
 import { InterestsUserController } from './interest_user.controller';
 import { InterestUser, InterestUserSchema } from './schemas/interests_user.schema';
 import { Module } from '@nestjs/common';
@@ -9,6 +10,7 @@ import { InterestsUserService } from './intersest_user.service';
 
 @Module({
   imports: [
+    AuthModule,
     MongooseModule.forFeature([
       { name: Interest.name, schema: InterestSchema },
       {name: InterestUser.name, schema: InterestUserSchema}

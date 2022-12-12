@@ -1,6 +1,7 @@
 import { InterestsUserService } from './intersest_user.service';
 import { InterestUserDto } from './entities/interest_user.entity';
-import { Controller, Get, Post, Body } from "@nestjs/common";
+import { Controller, Get, Post, Body , Req} from "@nestjs/common";
+import { Request } from 'express';
 
 
 @Controller('interests_user')
@@ -9,11 +10,16 @@ export class InterestsUserController {
 
   @Post()
   create(@Body() dto : InterestUserDto) {
-    return dto;
+    return this.interestsUserService.create(dto);
   }
 
   @Get()
   getAll() {
-    return "get all"
+    return this.interestsUserService.getAll();
+  }
+
+  @Get('match')
+  getMatches(@Body() dto : {uid: string}){
+    return this.interestsUserService.getMatches(dto.uid);
   }
 }
