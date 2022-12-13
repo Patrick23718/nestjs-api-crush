@@ -19,37 +19,8 @@ export class User {
   Interests: Interest[];
 
   @Prop()
-  Images: string[];
-
-  @Prop()
   Name: string;
 
-  @Prop({ type: Date })
-  Birthdate: Date;
-
-  @Prop()
-  About: string;
-
-  @Prop()
-  Email: string;
-
-  @Prop()
-  Address: string;
-
-  @Prop()
-  PhoneNumber: string;
-
-  @Prop()
-  Gender: string;
-
-  @Prop()
-  ProfileURL: string;
-
-  @Prop({
-    enum: ['AWAIT', 'PUBLISH'],
-    default: 'AWAIT'
-  })
-  Publish: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
