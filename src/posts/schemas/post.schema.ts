@@ -1,7 +1,9 @@
+import { Comment } from './../comment/schema/comment.schema';
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { Document } from "mongoose";
 import { Interest } from "../../interests/schemas/interest.schema";
 import { User } from "../../auth/schemas/user.schema";
+
 
 export type PostDocument = Post & Document;
 
@@ -18,16 +20,19 @@ export class Post {
   Image: string;
 
  @Prop({type: mongoose.Schema.Types.ObjectId, ref: User.name})
-  Author: string;
+  Author: User;
 
  @Prop()
  AuthorUid: string;
 
  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Interest.name })
-  Interest: string;
+  Interest: Interest;
 
  @Prop({type: [{type:mongoose.Schema.Types.ObjectId, ref: User.name}]})
  Likes: User[];
+
+ @Prop({type: [{type:mongoose.Schema.Types.ObjectId, ref:'Comment'}]})
+ Comments: Comment[];
 
 }
 
